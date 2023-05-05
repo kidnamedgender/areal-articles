@@ -6,10 +6,16 @@ config();
 
 import cors from 'cors';
 
+import { router as articleRouter } from './routes/articleRoute.js';
+import { router as commentRouter } from './routes/commentRoute.js';
+
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+
+app.use('/article', articleRouter);
+app.use('/comment', commentRouter);
 
 const start = async () => {
   try {
