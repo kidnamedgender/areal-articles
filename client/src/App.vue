@@ -1,12 +1,16 @@
 <template>
-  <!-- header -->
-  <div class="content border-b-[2px] border-b-mainStrokeGray flex justify-between text-mainOrange">
-    <router-link :to="'/articles'"><p>Главная</p></router-link>
-    <p>Создать статью</p>
-  </div>
+  <UpdateCommentModal />
+  <Header />
   <router-view></router-view>
 </template>
 
 <script>
-export default {};
+import Header from './components/Header.vue';
+import UpdateCommentModal from './components/UpdateCommentModal.vue';
+export default {
+  components: {
+    Header,
+    UpdateCommentModal,
+  },
+};
 </script>

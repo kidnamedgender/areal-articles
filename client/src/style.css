@@ -7,10 +7,13 @@
     @apply bg-mainDarkBlue bg-cover bg-no-repeat font-raleway font-semibold;
   }
   td {
-    @apply text-center border-r-[2px] border-r-mainStrokeGray truncate max-w-[200px];
+    @apply text-center border-r-[2px] border-r-mainStrokeGray truncate max-w-[200px] px-[10px];
   }
   th {
     @apply w-[300px] border-r-[2px] border-r-mainStrokeGray text-mainOrange;
+  }
+  p {
+    @apply font-medium;
   }
 }
 
