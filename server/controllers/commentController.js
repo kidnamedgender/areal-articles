@@ -1,4 +1,7 @@
 import { Comment } from '../models/Comment.js';
+import { Op } from 'sequelize';
+
+import moment from 'moment/moment.js';
 
 const postComment = async (req, res) => {
   try {
@@ -81,4 +84,29 @@ const deleteComment = async (req, res) => {
   }
 };
 
-export { postComment, getComments, getComment, updateComment, deleteComment };
+const getCommentsBetweenDates = async (req, res) => {
+  try {
+    const dateFrom = req.query.dateFrom;
+    const dateTo = req.query.dateTo;
+
+    const comments = await Comment.findAll({
+      where: {
+        createdAt: {
+          [Op.between]: [new Date(moment(dateFrom).format()), new Date(moment(dateTo).format())],
+        },
+      },
+    });
+    res.status(200).json(comments);
+  } catch (err) {
+    res.status(500).json({ message: 'Не удалось отфильтровать комментарии.' });
+  }
+};
+
+export {
+  postComment,
+  getComments,
+  getComment,
+  updateComment,
+  deleteComment,
+  getCommentsBetweenDates,
+};
