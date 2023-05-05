@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-mainDarkBlue bg-cover bg-no-repeat font-raleway font-semibold;
+  }
+  td {
+    @apply text-center border-r-[2px] border-r-mainStrokeGray truncate max-w-[200px];
+  }
+  th {
+    @apply w-[300px] border-r-[2px] border-r-mainStrokeGray text-mainOrange;
+  }
+}
+
+@layer components {
+  .content {
+    @apply max-w-[1280px] mx-auto border-l-[1px] border-r-[1px] border-black px-[70px] py-[35px];
+  }
+}
