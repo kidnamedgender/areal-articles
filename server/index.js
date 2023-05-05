@@ -14,8 +14,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use('/article', articleRouter);
-app.use('/comment', commentRouter);
+app.use('', articleRouter);
+app.use('', commentRouter);
 
 const start = async () => {
   try {
