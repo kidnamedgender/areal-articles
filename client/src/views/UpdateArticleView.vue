@@ -1,9 +1,6 @@
 <template>
   <div class="content">
-    <div class="flex justify-between items-end text-mainOrange">
-      <h1 class="text-[36px] font-semibold">Редактировать статью</h1>
-      <p @click="() => this.$router.go(-1)">Назад</p>
-    </div>
+    <Title :name="'Редактировать статью'" :backB="true" />
     <div class="pt-[100px] max-w-[800px] mx-auto text-mainWhite">
       <div class="mb-[5px] flex items-center gap-[5px]">
         <input
@@ -32,6 +29,8 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
+import Title from '../components/Title.vue';
+
 export default {
   computed: mapGetters(['article']),
   data() {
@@ -48,6 +47,9 @@ export default {
   created() {
     this.form.title = this.article.title;
     this.form.text = this.article.text;
+  },
+  components: {
+    Title,
   },
 };
 </script>

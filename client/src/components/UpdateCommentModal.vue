@@ -1,6 +1,14 @@
 <template>
-  <div class="bg-[rgba(0,0,0,0.2)] top-0 left-0 w-[100%] h-[100%] flex items-center fixed">
-    <div class="bg-mainBlockBlue min-h-[400px] max-w-[900px] mx-auto p-10">
+  <div
+    @click="() => this.$router.go(-1)"
+    class="bg-[rgba(0,0,0,0.2)] top-0 left-0 w-[100%] h-[100%] flex items-center fixed">
+    <div
+      @click="
+        (e) => {
+          e.stopPropagation();
+        }
+      "
+      class="bg-mainBlockBlue min-h-[400px] max-w-[900px] mx-auto p-10">
       <div class="flex justify-between items-end text-mainOrange">
         <h1 class="text-[24px] font-semibold">Редактирование комментария</h1>
       </div>

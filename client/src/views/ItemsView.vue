@@ -1,8 +1,6 @@
 <template>
   <div class="content">
-    <div>
-      <h1 class="text-[36px] text-mainOrange font-semibold">Статьи</h1>
-    </div>
+    <Title :name="'Статьи'" :backB="false" />
     <div class="flex justify-center pt-[80px]">
       <ArticlesList />
     </div>
@@ -10,15 +8,17 @@
 </template>
 
 <script>
-import ArticlesList from '../components/ArticlesList.vue';
-
 import { mapActions } from 'vuex';
+
+import ArticlesList from '../components/ArticlesList.vue';
+import Title from '../components/Title.vue';
 
 export default {
   methods: mapActions(['getArticles']),
 
   components: {
     ArticlesList,
+    Title,
   },
 
   created() {
