@@ -4,6 +4,7 @@ import ItemsView from '../views/ItemsView.vue';
 import ItemView from '../views/ItemView.vue';
 import CreateArticleView from '../views/CreateArticleView.vue';
 import UpdateArticleView from '../views/UpdateArticleView.vue';
+import UpdateCommentModal from '../components/UpdateCommentModal.vue';
 
 const routes = [
   {
@@ -13,6 +14,17 @@ const routes = [
   {
     path: '/article/:id',
     component: ItemView,
+
+    children: [
+      {
+        path: ':comment_id/update-comment',
+        component: UpdateCommentModal,
+        props: true,
+        meta: {
+          showModal: true,
+        },
+      },
+    ],
   },
   {
     path: '/create-article',
@@ -22,9 +34,10 @@ const routes = [
     path: '/article/:id/update-article',
     component: UpdateArticleView,
   },
+
   {
     path: '/:catchAll(.*)',
-    component: ItemsView,
+    redirect: '/articles',
   },
 ];
 

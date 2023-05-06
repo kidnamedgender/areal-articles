@@ -1,5 +1,4 @@
 <template>
-  <UpdateCommentModal />
   <Header />
   <router-view></router-view>
 </template>

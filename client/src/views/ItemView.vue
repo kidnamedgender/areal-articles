@@ -46,9 +46,16 @@
           <div class="flex justify-between gap-[40px]">
             <p class="text-mainWhite text-justify break-words max-w-[500px]">{{ comment.text }}</p>
             <div class="flex gap-5 text-mainOrange font-medium text-[14px]">
-              <p>Редакт.</p>
+              <router-link :to="`${this.$route.params.id}/${comment.id}/update-comment`">
+                <p>Редакт.</p>
+              </router-link>
               <p @click="() => remove(comment.id)">Удалить</p>
             </div>
+          </div>
+        </div>
+        <div v-if="showModal" class="modal-route">
+          <div class="modal-content">
+            <router-view></router-view>
           </div>
         </div>
       </div>
@@ -65,6 +72,7 @@ export default {
 
   data: function () {
     return {
+      showModal: false,
       form: {
         text: '',
       },
@@ -89,6 +97,14 @@ export default {
   created() {
     this.getArticle(this.$route.params.id);
     this.getComments(this.$route.params.id);
+  },
+  watch: {
+    $route: {
+      immediate: true,
+      handler: function (newVal) {
+        this.showModal = newVal.meta && newVal.meta.showModal;
+      },
+    },
   },
 };
 </script>

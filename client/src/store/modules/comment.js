@@ -26,18 +26,45 @@ export default {
         console.log(err);
       }
     },
+    getComment: async function (context, req) {
+      try {
+        const [articleId, commentId] = req;
+        const { data } = await axios.get(
+          `http://localhost:5555/article/${articleId}/comment/${commentId}`,
+        );
+        context.commit('updateComment', data);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    updateComment: async function (_, req) {
+      try {
+        const [artcleId, commentId, data] = req;
+        await axios.patch(`http://localhost:5555/article/${artcleId}/comment/${commentId}`, data);
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
   mutations: {
     updateComments(state, data) {
       state.comments = data;
     },
+    updateComment(state, data) {
+      state.comment = data;
+    },
   },
   state: {
     comments: [],
+    comment: {},
   },
   getters: {
     comments(state) {
       return state.comments;
+    },
+    comment(state) {
+      return state.comment;
     },
   },
 };
