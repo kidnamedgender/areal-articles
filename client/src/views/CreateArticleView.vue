@@ -12,7 +12,12 @@
           v-model="form.title"
           placeholder="Название статьи" />
         <button
-          @click="postArticle"
+          @click="
+            () => {
+              postArticle(form);
+              this.$router.push({ path: '/articles' });
+            }
+          "
           class="w-[20%] h-[50px] bg-mainBlockBlue border-[2px] border-mainStrokeGray">
           Создать
         </button>
@@ -24,8 +29,9 @@
     </div>
   </div>
 </template>
+
 <script>
-import axios from 'axios';
+import { mapActions } from 'vuex';
 
 export default {
   data() {
@@ -36,15 +42,6 @@ export default {
       },
     };
   },
-  methods: {
-    postArticle: async function () {
-      try {
-        await axios.post('http://localhost:5555/article', this.form);
-        this.$router.push({ path: '/articles' });
-      } catch (err) {
-        console.log(err);
-      }
-    },
-  },
+  methods: mapActions(['postArticle']),
 };
 </script>

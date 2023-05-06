@@ -12,7 +12,12 @@
           v-model="form.title"
           placeholder="Название статьи" />
         <button
-          @click="updateArticle"
+          @click="
+            () => {
+              updateArticle([this.$route.params.id, form]);
+              this.$router.go(-1);
+            }
+          "
           class="w-[20%] h-[50px] bg-mainBlockBlue border-[2px] border-mainStrokeGray">
           Редактировать
         </button>
@@ -25,9 +30,10 @@
   </div>
 </template>
 <script>
-import axios from 'axios';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
+  computed: mapGetters(['article']),
   data() {
     return {
       form: {
@@ -37,26 +43,11 @@ export default {
     };
   },
   methods: {
-    getArticle: async function () {
-      try {
-        const { data } = await axios.get(`http://localhost:5555/article/${this.$route.params.id}`);
-        this.form.title = data.title;
-        this.form.text = data.text;
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    updateArticle: async function () {
-      try {
-        await axios.patch(`http://localhost:5555/article/${this.$route.params.id}`, this.form);
-        this.$router.go(-1);
-      } catch (err) {
-        console.log(err);
-      }
-    },
+    ...mapActions(['updateArticle']),
   },
   created() {
-    this.getArticle();
+    this.form.title = this.article.title;
+    this.form.text = this.article.text;
   },
 };
 </script>

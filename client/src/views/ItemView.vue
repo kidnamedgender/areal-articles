@@ -13,7 +13,15 @@
             <router-link :to="`${this.$route.params.id}/update-article`">
               <p>Редакт.</p>
             </router-link>
-            <p @click="deleteArticle">Удалить</p>
+            <p
+              @click="
+                () => {
+                  deleteArticle(this.$route.params.id);
+                  this.$router.replace({ path: '/articles' });
+                }
+              ">
+              Удалить
+            </p>
           </div>
         </div>
         <p class="text-justify text-mainWhite">{{ article.text }}</p>
@@ -26,7 +34,7 @@
           placeholder="Комментарий" />
 
         <button
-          @click="postComment"
+          @click="submit"
           class="min-w-[130px] min-h-[50px] bg-mainBlockBlue border-[2px] border-mainStrokeGray">
           Оставить
         </button>
@@ -39,7 +47,7 @@
             <p class="text-mainWhite text-justify break-words max-w-[500px]">{{ comment.text }}</p>
             <div class="flex gap-5 text-mainOrange font-medium text-[14px]">
               <p>Редакт.</p>
-              <p @click="() => deleteComment(comment.id)">Удалить</p>
+              <p @click="() => remove(comment.id)">Удалить</p>
             </div>
           </div>
         </div>
@@ -49,14 +57,14 @@
 </template>
 
 <script>
-import axios from 'axios';
-import { router } from '../router';
+import { mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
+  computed: mapGetters(['article', 'comments']),
+
   data: function () {
     return {
-      article: {},
-      comments: [],
       form: {
         text: '',
       },
@@ -64,62 +72,23 @@ export default {
   },
 
   methods: {
-    getArticle: async function () {
-      try {
-        const { data } = await axios.get(`http://localhost:5555/article/${this.$route.params.id}`);
-        this.article = data;
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    getComments: async function () {
-      try {
-        const { data } = await axios.get(
-          `http://localhost:5555/article/${this.$route.params.id}/comments`,
-        );
-        this.comments = data;
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    deleteComment: async function (commentId) {
-      try {
-        await axios.delete(
-          `http://localhost:5555/article/${this.$route.params.id}/comment/${commentId}`,
-        );
+    ...mapActions(['getArticle', 'getComments', 'postComment', 'deleteComment', 'deleteArticle']),
 
-        this.getComments();
-      } catch (err) {
-        console.log(err);
-      }
+    submit: async function () {
+      await this.postComment([this.form, this.$route.params.id]);
+      this.getComments(this.$route.params.id);
+      this.form.text = '';
     },
 
-    postComment: async function () {
-      try {
-        await axios.post(
-          `http://localhost:5555/article/${this.$route.params.id}/comment`,
-          this.form,
-        );
-        this.form.text = '';
-        this.getComments();
-      } catch (err) {
-        console.log(err);
-      }
-    },
-
-    deleteArticle: async function () {
-      try {
-        await axios.delete(`http://localhost:5555/article/${this.$route.params.id}`);
-        router.replace({ path: '/articles' });
-      } catch (err) {
-        console.log(err);
-      }
+    remove: async function (commentId) {
+      await this.deleteComment([this.$route.params.id, commentId]);
+      this.getComments(this.$route.params.id);
     },
   },
 
   created() {
-    this.getArticle();
-    this.getComments();
+    this.getArticle(this.$route.params.id);
+    this.getComments(this.$route.params.id);
   },
 };
 </script>
