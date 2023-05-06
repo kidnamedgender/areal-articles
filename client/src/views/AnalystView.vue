@@ -54,8 +54,10 @@ export default {
     CommentItem,
   },
   created() {
-    this.dateFrom = this.$route.query.dateFrom;
-    this.dateTo = this.$route.query.dateTo;
+    if (this.$route.query.dateFrom || this.$route.query.dateTo) {
+      this.dateFrom = this.$route.query.dateFrom;
+      this.dateTo = this.$route.query.dateTo;
+    }
     this.submit();
   },
 };

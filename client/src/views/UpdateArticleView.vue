@@ -9,12 +9,7 @@
           v-model="form.title"
           placeholder="Название статьи" />
         <button
-          @click="
-            () => {
-              updateArticle([this.$route.params.id, form]);
-              this.$router.go(-1);
-            }
-          "
+          @click="update"
           class="w-[20%] h-[50px] bg-mainBlockBlue border-[2px] border-mainStrokeGray">
           Редактировать
         </button>
@@ -42,11 +37,20 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['updateArticle']),
+    ...mapActions(['updateArticle', 'getArticle']),
+    update: async function () {
+      await this.updateArticle([this.$route.params.id, this.form]);
+      this.$router.go(-1);
+    },
   },
   created() {
-    this.form.title = this.article.title;
-    this.form.text = this.article.text;
+    this.getArticle(this.$route.params.id);
+  },
+  watch: {
+    article() {
+      this.form.title = this.article.title;
+      this.form.text = this.article.text;
+    },
   },
   components: {
     Title,
