@@ -1,4 +1,6 @@
 import { Comment } from '../models/Comment.js';
+import { Article } from '../models/Article.js';
+
 import { Op } from 'sequelize';
 
 import moment from 'moment/moment.js';
@@ -90,9 +92,14 @@ const getCommentsBetweenDates = async (req, res) => {
     const dateTo = req.query.dateTo;
 
     const comments = await Comment.findAll({
+      order: [['articleId', 'ASC']],
+      include: Article,
       where: {
         createdAt: {
-          [Op.between]: [new Date(moment(dateFrom).format()), new Date(moment(dateTo).format())],
+          [Op.and]: {
+            [Op.gte]: new Date(moment(dateFrom).format()),
+            [Op.lte]: new Date(moment(dateTo).format()),
+          },
         },
       },
     });

@@ -1,15 +1,6 @@
 <template>
   <div class="pt-[40px]">
-    <div
-      v-for="comment in comments"
-      class="max-w-[800px] mb-5 bg-mainBlockBlue p-[40px] border-[2px] border-mainStrokeGray">
-      <div class="flex justify-between gap-[40px]">
-        <p class="text-mainWhite text-justify break-words max-w-[500px]">{{ comment.text }}</p>
-        <Controls
-          :remove="() => remove(comment.id)"
-          :path="`${this.$route.params.id}/${comment.id}/update-comment`" />
-      </div>
-    </div>
+    <CommentItem :comments="comments" />
     <div v-if="showModal" class="modal-route">
       <div class="modal-content">
         <router-view></router-view>
@@ -20,7 +11,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
-import Controls from './Controls.vue';
+import CommentItem from './CommentItem.vue';
 
 export default {
   data: function () {
@@ -31,11 +22,6 @@ export default {
   computed: mapGetters(['comments']),
   methods: {
     ...mapActions(['deleteComment', 'getComments']),
-
-    remove: async function (commentId) {
-      await this.deleteComment([this.$route.params.id, commentId]);
-      this.getComments(this.$route.params.id);
-    },
   },
   watch: {
     $route: {
@@ -48,8 +34,9 @@ export default {
   created() {
     this.getComments(this.$route.params.id);
   },
+
   components: {
-    Controls,
+    CommentItem,
   },
 };
 </script>

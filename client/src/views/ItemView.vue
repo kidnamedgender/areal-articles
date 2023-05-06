@@ -28,10 +28,10 @@ export default {
   computed: mapGetters(['article']),
 
   methods: {
-    ...mapActions(['getArticle', 'deleteArticle']),
+    ...mapActions(['getArticle', 'deleteArticle', 'getArticles']),
 
     remove: async function () {
-      this.deleteArticle(this.$route.params.id);
+      await this.deleteArticle(this.$route.params.id);
       this.$router.replace({ path: '/articles' });
     },
   },

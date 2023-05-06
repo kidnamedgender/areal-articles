@@ -42,7 +42,7 @@ export default {
   methods: {
     ...mapActions(['getComment', 'updateComment', 'getComments']),
     update: async function () {
-      this.updateComment([this.$route.params.id, this.$route.params.comment_id, this.form]);
+      await this.updateComment([this.$route.params.id, this.$route.params.comment_id, this.form]);
       this.$router.go(-1);
       this.getComments(this.$route.params.id);
     },

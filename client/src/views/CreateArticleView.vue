@@ -9,12 +9,7 @@
           v-model="form.title"
           placeholder="Название статьи" />
         <button
-          @click="
-            () => {
-              postArticle(form);
-              this.$router.push({ path: '/articles' });
-            }
-          "
+          @click="create"
           class="w-[20%] h-[50px] bg-mainBlockBlue border-[2px] border-mainStrokeGray">
           Создать
         </button>
@@ -41,7 +36,14 @@ export default {
       },
     };
   },
-  methods: mapActions(['postArticle']),
+  methods: {
+    ...mapActions(['postArticle', 'getArticles']),
+
+    create: async function () {
+      await this.postArticle(this.form);
+      this.$router.replace({ path: '/articles' });
+    },
+  },
 
   components: {
     Title,

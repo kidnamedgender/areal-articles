@@ -46,10 +46,25 @@ export default {
         console.log(err);
       }
     },
+
+    filterComments: async function (context, req) {
+      try {
+        const [dateFrom, dateTo] = req;
+        const { data } = await axios.get(
+          `http://localhost:5555/analytic/comments/?dateFrom=${dateFrom}&dateTo=${dateTo}`,
+        );
+        context.commit('updateFiltredComments', data);
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
   mutations: {
     updateComments(state, data) {
       state.comments = data;
+    },
+    updateFiltredComments(state, data) {
+      state.filtredComments = data;
     },
     updateComment(state, data) {
       state.comment = data;
@@ -57,6 +72,7 @@ export default {
   },
   state: {
     comments: [],
+    filtredComments: [],
     comment: {},
   },
   getters: {
@@ -65,6 +81,9 @@ export default {
     },
     comment(state) {
       return state.comment;
+    },
+    filtredComments(state) {
+      return state.filtredComments;
     },
   },
 };

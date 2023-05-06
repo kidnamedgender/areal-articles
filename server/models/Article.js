@@ -9,7 +9,7 @@ const Article = sequelize.define('article', {
   text: { type: DataTypes.TEXT, allowNull: false },
 });
 
-Article.hasMany(Comment);
+Article.hasMany(Comment, { onDelete: 'cascade', hooks: true });
 Comment.belongsTo(Article);
 
 export { Article };
