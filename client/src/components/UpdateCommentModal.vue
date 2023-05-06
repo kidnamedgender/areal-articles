@@ -42,9 +42,11 @@ export default {
   methods: {
     ...mapActions(['getComment', 'updateComment', 'getComments']),
     update: async function () {
-      await this.updateComment([this.$route.params.id, this.$route.params.comment_id, this.form]);
-      this.$router.go(-1);
-      this.getComments(this.$route.params.id);
+      if (this.form.text) {
+        await this.updateComment([this.$route.params.id, this.$route.params.comment_id, this.form]);
+        this.$router.go(-1);
+        this.getComments(this.$route.params.id);
+      } else alert('Не оставляйте поля пустыми');
     },
   },
   computed: mapGetters(['comment']),

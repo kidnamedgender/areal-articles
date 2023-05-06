@@ -39,8 +39,10 @@ export default {
   methods: {
     ...mapActions(['updateArticle', 'getArticle']),
     update: async function () {
-      await this.updateArticle([this.$route.params.id, this.form]);
-      this.$router.go(-1);
+      if (this.form.title && this.form.text) {
+        await this.updateArticle([this.$route.params.id, this.form]);
+        this.$router.go(-1);
+      } else alert('Не оставляйте поля пустыми');
     },
   },
   created() {

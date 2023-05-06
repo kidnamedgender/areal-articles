@@ -2,6 +2,9 @@
   <div
     v-for="comment in comments"
     class="max-w-[800px] mb-5 bg-mainBlockBlue p-[40px] border-[2px] border-mainStrokeGray">
+    <p class="text-mainOrange font-semibold" v-if="comment.article?.title">
+      {{ comment.article?.title }}
+    </p>
     <div class="flex justify-between gap-[40px]">
       <p class="text-mainWhite text-justify break-words max-w-[500px]">{{ comment.text }}</p>
       <div class="space-y-2">

@@ -40,8 +40,10 @@ export default {
     ...mapActions(['postArticle', 'getArticles']),
 
     create: async function () {
-      await this.postArticle(this.form);
-      this.$router.replace({ path: '/articles' });
+      if (this.form.title && this.form.text) {
+        await this.postArticle(this.form);
+        this.$router.replace({ path: '/articles' });
+      } else alert('Не оставляйте поля пустыми');
     },
   },
 

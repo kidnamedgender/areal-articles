@@ -27,9 +27,11 @@ export default {
   methods: {
     ...mapActions(['postComment', 'getComments']),
     submit: async function () {
-      await this.postComment([this.form, this.$route.params.id]);
-      this.getComments(this.$route.params.id);
-      this.form.text = '';
+      if (this.form.text) {
+        await this.postComment([this.form, this.$route.params.id]);
+        this.getComments(this.$route.params.id);
+        this.form.text = '';
+      } else alert('Не оставляйте поля пустыми');
     },
   },
 };
