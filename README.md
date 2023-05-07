@@ -7,6 +7,10 @@ git clone https://github.com/kidnamedgender/areal-articles.git
 ```
 
 ```
+cd areal-articles
+```
+
+```
 code .
 ```
 
