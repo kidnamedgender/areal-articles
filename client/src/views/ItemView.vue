@@ -1,14 +1,15 @@
 <template>
   <div class="content">
     <Title :name="'Просмотр статьи'" :backB="true" />
-    <div>
+    <NotFound v-if="!article?.id" :title="'Такой статьи не существует'" />
+    <div v-else>
       <div
         class="max-w-[730px] mt-[80px] p-[40px] bg-[rgb(29,39,51)] border-[2px] border-mainStrokeGray">
         <div class="flex justify-between items-end pb-[35px] text-mainOrange text-[14px]">
           <h1 class="text-[28px] max-w-[400px] break-words">{{ article.title }}</h1>
           <Controls :path="`${this.$route.params.id}/update-article`" :remove="remove" />
         </div>
-        <p class="text-justify text-mainWhite">{{ article.text }}</p>
+        <p class="text-justify text-mainWhite max-w-[730px] break-words">{{ article.text }}</p>
       </div>
       <CreateComment />
       <CommentsList />
@@ -23,6 +24,7 @@ import Title from '../components/Title.vue';
 import CreateComment from '../components/CreateComment.vue';
 import CommentsList from '../components/CommentsList.vue';
 import Controls from '../components/Controls.vue';
+import NotFound from '../components/NotFound.vue';
 
 export default {
   computed: mapGetters(['article']),
@@ -45,6 +47,7 @@ export default {
     CreateComment,
     CommentsList,
     Controls,
+    NotFound,
   },
 };
 </script>

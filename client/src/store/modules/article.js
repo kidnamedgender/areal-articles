@@ -4,7 +4,7 @@ export default {
   actions: {
     getArticles: async function (context) {
       try {
-        const { data } = await axios.get('http://localhost:5555/articles');
+        const { data } = await axios.get(`http://localhost:5555/articles`);
         context.commit('updateArticles', data);
       } catch (err) {
         console.log(err);
@@ -12,7 +12,7 @@ export default {
     },
     postArticle: async function (_, data) {
       try {
-        await axios.post('http://localhost:5555/article', data);
+        await axios.post(`http://localhost:5555/article`, data);
       } catch (err) {
         console.log(err);
       }

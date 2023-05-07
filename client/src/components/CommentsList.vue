@@ -1,5 +1,6 @@
 <template>
   <div class="pt-[40px]">
+    <NotFound :title="'Оставьте свое мнение'" v-if="!comments.length" />
     <CommentItem :comments="comments" />
     <div v-if="showModal" class="modal-route">
       <div class="modal-content">
@@ -12,6 +13,7 @@
 import { mapActions, mapGetters } from 'vuex';
 
 import CommentItem from './CommentItem.vue';
+import NotFound from './NotFound.vue';
 
 export default {
   data: function () {
@@ -37,6 +39,7 @@ export default {
 
   components: {
     CommentItem,
+    NotFound,
   },
 };
 </script>

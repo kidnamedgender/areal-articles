@@ -17,7 +17,7 @@
       <textarea
         v-model="form.text"
         class="w-[100%] p-[10px] h-[444px] bg-mainBlockBlue resize-none border-[2px] break-words border-mainStrokeGray"
-        placeholder="Содержание статьи. Макс. длина 4000 "></textarea>
+        placeholder="Содержание статьи"></textarea>
     </div>
   </div>
 </template>

@@ -1,7 +1,6 @@
 <template>
   <div class="content">
-    <Title :name="'Фильтрация комментариев'" :backB="true" />
-
+    <Title :name="'Фильтрация комментариев'" :backB="false" />
     <div class="text-mainWhite pt-[20px]">
       <div class="flex gap-5 font-mons jusify-center items-end">
         <input
@@ -21,6 +20,8 @@
         </button>
       </div>
     </div>
+    <NotFound :title="'Здесь ничего нет'" v-if="!filtredComments.length" />
+
     <div class="mt-[80px]">
       <CommentItem :comments="filtredComments" :dateFrom="dateFrom" :dateTo="dateTo" />
     </div>
@@ -31,6 +32,7 @@ import { mapActions, mapGetters } from 'vuex';
 
 import Title from '../components/Title.vue';
 import CommentItem from '../components/CommentItem.vue';
+import NotFound from '../components/NotFound.vue';
 
 export default {
   data() {
@@ -45,13 +47,13 @@ export default {
     submit: async function () {
       await this.filterComments([this.dateFrom, this.dateTo]);
       this.$router.push({ query: { dateFrom: this.dateFrom, dateTo: this.dateTo } });
-      console.log();
     },
   },
 
   components: {
     Title,
     CommentItem,
+    NotFound,
   },
   created() {
     if (this.$route.query.dateFrom || this.$route.query.dateTo) {
